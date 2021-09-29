@@ -1,5 +1,6 @@
 "use strict";
 const getSyntax = require("./get-syntax");
+const { resolvePackage } = require("./resolve-package");
 const cache = {};
 
 function loadSyntax (opts, id) {
@@ -8,10 +9,10 @@ function loadSyntax (opts, id) {
 	let syntax = cache[modulePath];
 	if (!syntax) {
 		syntax = {
-			parse: require(modulePath),
+			parse: resolvePackage(modulePath),
 		};
 		try {
-			syntax.stringify = require(id + "/template-stringify");
+			syntax.stringify = resolvePackage(id + "/template-stringify");
 		} catch (ex) {
 			syntax.stringify = cssSyntax.stringify;
 		}

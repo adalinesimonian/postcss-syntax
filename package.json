@@ -83,7 +83,45 @@
     ".svelte"
   ],
   "peerDependencies": {
-    "postcss": ">=5.0.0"
+    "postcss": ">=5.0.0",
+    "@stylelint/postcss-css-in-js": "*",
+    "@stylelint/postcss-markdown": "*",
+    "postcss-html": "*",
+    "postcss-js": "*",
+    "postcss-less": "*",
+    "postcss-safe-parser": "*",
+    "postcss-sass": "*",
+    "postcss-scss": "*",
+    "sugarss": "*"
+  },
+  "peerDependenciesMeta": {
+    "@stylelint/postcss-css-in-js": {
+      "optional": true
+    },
+    "@stylelint/postcss-markdown": {
+      "optional": true
+    },
+    "postcss-html": {
+      "optional": true
+    },
+    "postcss-js": {
+      "optional": true
+    },
+    "postcss-less": {
+      "optional": true
+    },
+    "postcss-safe-parser": {
+      "optional": true
+    },
+    "postcss-sass": {
+      "optional": true
+    },
+    "postcss-scss": {
+      "optional": true
+    },
+    "sugarss": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "chai": "^4.2.0",

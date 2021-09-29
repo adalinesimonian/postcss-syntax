@@ -1,6 +1,7 @@
 "use strict";
 const path = require("path");
 const reSyntaxCSS = /^(?:post)?css$/i;
+const { resolvePackage } = require("./resolve-package");
 
 function cssSyntax () {
 	return {
@@ -28,7 +29,7 @@ function requireSyntax (syntax) {
 	} else {
 		syntax = syntax.toLowerCase().replace(/^(?:postcss-)?(\w+)/i, "postcss-$1");
 	}
-	return normalize(require(syntax));
+	return normalize(resolvePackage(syntax));
 }
 
 function getSyntax (lang, opts) {

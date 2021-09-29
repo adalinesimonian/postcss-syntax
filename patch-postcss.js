@@ -1,5 +1,6 @@
 "use strict";
 const path = require("path");
+const { resolvePackage } = require("./resolve-package");
 const patched = {};
 
 function isPromise (obj) {
@@ -56,7 +57,7 @@ function patch (Document) {
 		!patched[file]
 	)).forEach(file => {
 		try {
-			fn(require(file));
+			fn(resolvePackage(file));
 		} catch (ex) {
 			//
 		}

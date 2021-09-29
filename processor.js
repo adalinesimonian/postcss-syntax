@@ -1,6 +1,7 @@
 "use strict";
 
 const parseStyle = require("./parse-style");
+const { resolvePackage } = require("./resolve-package");
 
 function getSyntax (config, syntax) {
 	if (typeof syntax !== "string") {
@@ -12,7 +13,7 @@ function getSyntax (config, syntax) {
 		syntaxConfig = getSyntax(config, syntaxConfig);
 	} else {
 		syntaxConfig = {
-			extract: require(syntax.toLowerCase().replace(/^(postcss-)?/i, "postcss-") + "/extract"),
+			extract: resolvePackage(syntax.toLowerCase().replace(/^(postcss-)?/i, "postcss-") + "/extract"),
 		};
 		config[syntax] = syntaxConfig;
 	}

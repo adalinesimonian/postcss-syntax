@@ -15,8 +15,8 @@ function loadSyntax (opts, idOrSyntax) {
 
 		const syntax = {
 			parse: cssSyntax.parse.name === "safeParse"
-				? idOrSyntax.parse
-				: idOrSyntax.safeParse,
+				? idOrSyntax.safeParse
+				: idOrSyntax.parse,
 			stringify: idOrSyntax.stringify || cssSyntax.stringify,
 		};
 

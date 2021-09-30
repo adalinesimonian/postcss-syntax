@@ -1,23 +1,47 @@
 "use strict";
 const getSyntax = require("./get-syntax");
 const { resolvePackage } = require("./resolve-package");
-const cache = {};
+const cache = new Map();
 
-function loadSyntax (opts, id) {
+function loadSyntax (opts, idOrSyntax) {
 	const cssSyntax = getSyntax("css", opts);
-	const modulePath = id + "/template-" + (cssSyntax.parse.name === "safeParse" ? "safe-" : "") + "parse";
-	let syntax = cache[modulePath];
-	if (!syntax) {
-		syntax = {
-			parse: resolvePackage(modulePath),
-		};
-		try {
-			syntax.stringify = resolvePackage(id + "/template-stringify");
-		} catch (ex) {
-			syntax.stringify = cssSyntax.stringify;
+
+	if (idOrSyntax && typeof idOrSyntax !== "string") {
+		const cached = cache.get(idOrSyntax);
+
+		if (cached) {
+			return cached;
 		}
-		cache[modulePath] = syntax;
+
+		const syntax = {
+			parse: idOrSyntax.parse,
+			stringify: idOrSyntax.stringify || cssSyntax.stringify,
+		};
+
+		cache.set(idOrSyntax, syntax);
+
+		return syntax;
 	}
+
+	const modulePath = idOrSyntax + "/template-" + (cssSyntax.parse.name === "safeParse" ? "safe-" : "") + "parse";
+	const cached = cache.get(modulePath);
+
+	if (cached) {
+		return cached;
+	}
+
+	const syntax = {
+		parse: resolvePackage(modulePath),
+	};
+
+	try {
+		syntax.stringify = resolvePackage(idOrSyntax + "/template-stringify");
+	} catch {
+		syntax.stringify = cssSyntax.stringify;
+	}
+
+	cache.set(modulePath, syntax);
+
 	return syntax;
 }
 
